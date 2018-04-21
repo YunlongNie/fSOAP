@@ -32,7 +32,7 @@
 #' library(ggplot2)
 #' fdagg(fecs)
 #' 
-#' predict_y = predict_SOAP(previous_beta,ylist=observed, tlist=timepoints, spline_basis=spline.basis,nminus=2)
+#' predict_y = predict_SOAP(previous_beta,ylist=observed, tlist=timepoints, testt=NULL,spline_basis=spline.basis,nminus=2)
 #' 
 #' i=6
 #' plot(predict_y$predict[i],ylim=range(observed[[i]]))
@@ -74,8 +74,8 @@ residuals = sapply(1:length(ylist), function(x){
 	}
 	
 })
- sigmahat = mean(residuals[!is.na(residuals)])
- testd = list();testd$time = ttest
+sigmahat = mean(residuals[!is.na(residuals)])
+testd = list();testd$time = testt
 if (!is.null(testt)) {
 	ytestt = eval.fd(testt, yfitsfd) 
 	testd$y = ytestt
