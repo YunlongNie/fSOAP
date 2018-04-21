@@ -40,8 +40,8 @@
 #' points(x=timepoints[[i]],y=observed[[i]])
 #' }
 
-predict_SOAP = function(betalist,ylist, tlist,spline_basis,nminus=2){
-
+predict_SOAP = function(betalist,ylist, tlist,spline_basis,testt, nminus=2){
+if(missing(testt)) testt = NULL
 cfits = lapply(1:length(ylist), function(x){
 	timei = tlist[[x]]
 	xmat = lapply(1:length(betalist), function(i){
@@ -75,6 +75,11 @@ residuals = sapply(1:length(ylist), function(x){
 	
 })
  sigmahat = mean(residuals[!is.na(residuals)])
-list(predicted=  yfitsfd,sigmahat = sigmahat)
+ testd = list();testd$time = ttest
+if (!is.null(testt)) {
+	ytestt = eval.fd(testt, yfitsfd) 
+	testd$y = ytestt
+}
+list(predicted=  yfitsfd,testd=testd,sigmahat = sigmahat )
 
 }
