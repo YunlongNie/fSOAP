@@ -10,28 +10,36 @@
 #' @import lsei
 #' @examples
 #' \dontrun{
-#'library(fda)
-#'library(cFuSIM)
-#'data(bike_cFuSIM)
-#'timepts = bike$timepts
-#'norder=4 ## cubic B-spline
-#'nbasis=norder+length(timepts)-2; 
-#'spline_basis=create.bspline.basis(rangeval=c(1,24),nbasis#'norder,timepts)
-#'wull = bike$temp
-#'xfds=  Data2fd(y=wull%>%t, argvals=bike$timepts)
-#'y = bike$y
-#'train_sample = 1:length(y)
-#'y = y[train_sample]
-#'xfd = xfds[train_sample]
-#'res_c = cFuSIM_index(y, xfd, spline_basis)
-#'beta_fd = fd(res_c$coefBeta, res_c$basisBeta)
-#'plot(beta_fd,ylab="index function", xlab='time')
-#'fdagg(beta_fd)
-#'score_fit = (res_c$score_fit)
-#' pred_y = localpoly.reg(score_fit, y, degree.pol = 1, kernel.type = "gaussian",bandwidth = "CV",deriv=0,points#'score_fit)
-#'plot(x=score_fit, y=y)
-#'lines(pred_y$predicted[order(score_fit)],x=score_fit[order#'score_fit)],col=4)
+#' 
+#' library(fda)
+#' data(simulate_data)
+#' observed = simulate_data$observed
+#' timepoints =simulate_data$timepoints
+#' spline.basis=create.bspline.basis(rangeval=c(0,364),nbasis=15,norder=4)
+#' beta0 = rep(observed%>%do.call(c,.)%>%mean,spline.basis$nbasis)
+#' FEC1  = firstFEC(ylist=observed, tlist=timepoints,spline_basis=spline.basis, gamma=1e6,threshold=1e-5)
+#' previous_beta = list()
+#' previous_beta[[1]] = FEC1$beta
+#' FEC2 = FECconditional(ylist=observed, tlist=timepoints,beta_previous=previous_beta,spline_basis=spline.basis, gamma=1e6,threshold=1e-5)
+#' previous_beta[[2]] = FEC2$beta
+#' FEC3 = FECconditional(ylist=observed, tlist=timepoints,beta_previous=previous_beta,spline_basis=spline.basis, gamma=1e6,threshold=1e-5)
+#' previous_beta[[3]] = FEC3$beta
+#' 
+#' betas = do.call(cbind, previous_beta)
+#' colnames(betas)  =c("FEC1","FEC2","FEC3")
+#' fecs = fd(betas, spline.basis)
+#' 
+#' library(ggplot2)
+#' fdagg(fecs)
+#' 
+#' predict_y = predict_SOAP(previous_beta,ylist=observed, tlist=timepoints, spline_basis=spline.basis,nminus=2)
+#' 
+#' i=6
+#' plot(predict_y$predict[i],ylim=range(observed[[i]]))
+#' lines(simulate_data$yfds[i])
+#' points(x=timepoints[[i]],y=observed[[i]])
 #' }
+
 FECconditional  = function(ylist, tlist, beta_previous, spline_basis, threshold=1e-4,gamma=0){
 beta3 = runif(spline_basis$nbasis,-2,2)
 # if(missing(pc_index)) 

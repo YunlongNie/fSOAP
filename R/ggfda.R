@@ -2,6 +2,7 @@
 #' @param fdobj FECs
 #' @export fdagg
 #' @import fda
+#' @import ggplot2
 #' @import dplyr
 #' @examples
 #' \dontrun{
