@@ -1,0 +1,10 @@
+Package: fSOAP
+Type: Package
+Title: R package for Spase Orthonormal Approximation
+Version: 1.0
+Build Time: 2018-04-21 12:15:01
+Author: Yunlong
+Contact: nyunlong AT sfu.ca
+DESCRIPTION: no discription
+Url: https://github.com/YunlongNie/fSOAP
+RoxygenNote: 6.0.1
