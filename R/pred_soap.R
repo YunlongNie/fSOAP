@@ -32,7 +32,7 @@
 #' library(ggplot2)
 #' fdagg(fecs)
 #' 
-#' predict_y = predict_SOAP(previous_beta,ylist=observed, tlist=timepoints, testt=NULL,spline_basis=spline.basis,nminus=2)
+#' predict_y = predict_SOAP(previous_beta,ylist=observed, testt = 1:10,tlist=timepoints,spline_basis=spline.basis,nminus=2)
 #' 
 #' i=6
 #' plot(predict_y$predict[i],ylim=range(observed[[i]]))
