@@ -4,7 +4,7 @@
 \alias{predict_SOAP}
 \title{This function computes the predicted trajectories based on etimated FECs and sparse observatios using the SOAP method}
 \usage{
-predict_SOAP(betalist, ylist, tlist, spline_basis, testt, nminus = 2)
+predict_SOAP(betalist, ylist, tlist, spline_basis, testt = NULL, nminus = 2)
 }
 \arguments{
 \item{betalist}{a list of all the FECs' coefficients}

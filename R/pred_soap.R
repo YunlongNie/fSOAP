@@ -40,8 +40,8 @@
 #' points(x=timepoints[[i]],y=observed[[i]])
 #' }
 
-predict_SOAP = function(betalist,ylist, tlist,spline_basis,testt, nminus=2){
-if(missing(testt)) testt = NULL
+predict_SOAP = function(betalist,ylist, tlist,spline_basis,testt=NULL, nminus=2){
+# if(missing(testt)) testt = NULL
 cfits = lapply(1:length(ylist), function(x){
 	timei = tlist[[x]]
 	xmat = lapply(1:length(betalist), function(i){
