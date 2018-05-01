@@ -1,5 +1,5 @@
 # fSOAP
-## install this packge by runing the followig: 
+## install this packge by runing the following code: 
 
 install.packages('devtools')
 
